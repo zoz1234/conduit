@@ -1,3 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"broken","Thu Apr 13 15:17:49 GMT 2023","Thu Apr 13 15:17:49 GMT 2023","0","","test_con","TestConduit","","","test_open",""
-"broken","Thu Apr 13 15:17:51 GMT 2023","Thu Apr 13 15:17:51 GMT 2023","0","","test_con","TestConduit","","","test_accept",""
