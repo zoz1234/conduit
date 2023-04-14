@@ -65,6 +65,12 @@ class TestConduit(object):
 
         user_name = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//ul[@class="nav navbar-nav pull-xs-right"]//li[4]')))
         assert user_name.text == user["name"]
+        
+    def test_article_title_list(self):
+        sign_in(self.browser)
+
+        title_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]//a//h1')))
+        assert len(title_list) != 0
 
     def test_logout(self):
         sign_in(self.browser)
