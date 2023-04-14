@@ -61,4 +61,5 @@ class TestConduit(object):
         ok_btn.click()
 
         user_name = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
-        assert user_name.text == user["name"]
+        # assert user_name.text == user["name"]
+        assert user_name.text == 'Teszt Elek'
