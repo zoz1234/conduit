@@ -74,7 +74,7 @@ class TestConduit(object):
         title_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]//a//h1')))
         assert len(title_list) != 0
     
-     def test_pages(self):
+    def test_pages(self):
         sign_in(self.browser)
 
         page_list = self.browser.find_elements(By.XPATH, '//a[@class="page-link"]')
