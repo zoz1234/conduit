@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-#from data_for_test import user
+from data_for_test import user
 
 
 class TestConduit(object):
@@ -61,5 +61,5 @@ class TestConduit(object):
         ok_btn.click()
 
         user_name = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
-        # assert user_name.text == user["name"]
-        assert user_name.text == 'Teszt Elek'
+        assert user_name.text == user["name"]
+        # assert user_name.text == 'Teszt Elek'
