@@ -5,6 +5,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from data import user
+
 
 class TestConduit(object):
     def setup_method(self):
@@ -32,3 +34,27 @@ class TestConduit(object):
         accept_btn.click()
         cookie_panel = self.browser.find_elements(By.ID, 'cookie-policy-panel')
         assert len(cookie_panel) == 0
+
+    def test_sign_up(self):
+        sing_up = self.browser.find_element(By.LINK_TEXT, 'Sign up')
+        sing_up.click()
+
+        username_input= WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Username"]')))
+        email_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
+        password_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
+
+        username_input.send_keys(user["name"])
+        email_input.send_keys(user["email"])
+        password_input.send_keys(user["password"])
+
+        sing_up_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+        sing_up_btn.click()
+
+        message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        assert message.text == "Welcome!"
+
+        ok_btn = self.browser.find_element(By.XPATH, '//button[@class="swal-button swal-button--confirm"]')
+        ok_btn.click()
+
+        user_name = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
+        assert user_name.text == user["name"]
