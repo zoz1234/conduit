@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from data_for_test import user
+#from data_for_test import user
 
 
 class TestConduit(object):
@@ -43,9 +43,13 @@ class TestConduit(object):
         email_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
         password_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
 
-        username_input.send_keys(user["name"])
-        email_input.send_keys(user["email"])
-        password_input.send_keys(user["password"])
+        # username_input.send_keys(user["name"])
+        # email_input.send_keys(user["email"])
+        # password_input.send_keys(user["password"])
+        
+        username_input.send_keys('Teszt Elek')
+        email_input.send_keys('elek.teszt2023@gmail.com')
+        password_input.send_keys('Tesztelek21')
 
         sing_up_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         sing_up_btn.click()
