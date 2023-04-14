@@ -43,14 +43,10 @@ class TestConduit(object):
         email_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
         password_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
 
-        # username_input.send_keys(user["name"])
-        # email_input.send_keys(user["email"])
-        # password_input.send_keys(user["password"])
+        username_input.send_keys(user["name"])
+        email_input.send_keys(user["email"])
+        password_input.send_keys(user["password"])
         
-        username_input.send_keys('Teszt Elek')
-        email_input.send_keys('elek.teszt2023@gmail.com')
-        password_input.send_keys('Tesztelek21')
-
         sing_up_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         sing_up_btn.click()
 
@@ -62,4 +58,18 @@ class TestConduit(object):
 
         user_name = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2]
         assert user_name.text == user["name"]
-        # assert user_name.text == 'Teszt Elek'
+        
+    def test_login(self):
+        sign_in(self.browser)
+
+        user_name = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//ul[@class="nav navbar-nav pull-xs-right"]//li[4]')))
+        assert user_name.text == user["name"]
+
+    def test_logout(self):
+        sign_in(self.browser)
+
+        logout = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.LINK_TEXT, 'Log out')))
+        logout.click()
+
+        sign_in_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.LINK_TEXT, 'Sign in')))
+        assert sign_in_btn.is_displayed()
