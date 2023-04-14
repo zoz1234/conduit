@@ -73,6 +73,17 @@ class TestConduit(object):
 
         title_list = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]//a//h1')))
         assert len(title_list) != 0
+    
+     def test_pages(self):
+        sign_in(self.browser)
+
+        page_list = self.browser.find_elements(By.XPATH, '//a[@class="page-link"]')
+
+        for page in page_list:
+            page.click()
+            active_page = WebDriverWait(self.browser, 5).until(
+                EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]')))
+            assert page.text == active_page.text
 
     def test_logout(self):
         sign_in(self.browser)
