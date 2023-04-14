@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from data_for_test import user
 from func_for_test import sign_in
+import time
 
 
 class TestConduit(object):
@@ -33,6 +34,7 @@ class TestConduit(object):
         footer = self.browser.find_element(By.TAG_NAME, 'footer')
         accept_btn = footer.find_element(By.XPATH, '//button[@class="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')
         accept_btn.click()
+        time.sleep(1)
         cookie_panel = self.browser.find_elements(By.ID, 'cookie-policy-panel')
         assert len(cookie_panel) == 0
 
