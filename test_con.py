@@ -5,8 +5,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from data_for_test import user
-from func_for_test import sign_in
+from data_for_test import user, article
+from func_for_test import sign_in, create_article
 import time
 
 
@@ -81,10 +81,19 @@ class TestConduit(object):
 
         for page in page_list:
             page.click()
-            active_page = WebDriverWait(self.browser, 5).until(
-                EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]')))
+            active_page = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]')))
             assert page.text == active_page.text
+    
+    def test_new_article(self):
+        sign_in(self.browser)
+        create_article(self.browser)
 
+        author = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@class="author"]')))
+        title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="container"]//h1')))
+
+        assert author.text == user["name"]
+        assert title.text == article["title"]
+        
     def test_logout(self):
         sign_in(self.browser)
 
