@@ -104,11 +104,12 @@ class TestConduit(object):
         title_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
         title_input.clear()
         title_input.send_keys("Új cím")
+        time.sleep(1)
 
         publish_btn = self.browser.find_element(By.XPATH, '//button[@type="submit"]')
         publish_btn.click()
 
-        title = WebDriverWait(self.browser, 15).until(EC.presence_of_element_located((By.XPATH, '//div[@class="container"]//h1')))
+        title = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//div[@class="container"]//h1')))
 
         assert title.text == "Új cím"   
         
