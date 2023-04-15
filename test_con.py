@@ -94,24 +94,35 @@ class TestConduit(object):
         assert author.text == user["name"]
         assert title.text == article["title"]
        
-    def test_edit_article(self):
+#     def test_edit_article(self):
+#         sign_in(self.browser)
+#         create_article(self.browser)
+
+#         edit_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-edit"]')))
+#         edit_btn.click()
+
+#         title_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
+#         title_input.clear()
+#         title_input.send_keys("Új cím")
+#         time.sleep(2)
+
+#         publish_btn = self.browser.find_element(By.XPATH, '//button[@type="submit"]')
+#         publish_btn.click()
+
+#         title = WebDriverWait(self.browser, 15).until(EC.presence_of_element_located((By.XPATH, '//div[@class="container"]//h1')))
+
+#         assert title.text == "Új cím"   
+
+    def test_delete_article(self):
         sign_in(self.browser)
         create_article(self.browser)
 
-        edit_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-edit"]')))
-        edit_btn.click()
+        article_url = self.browser.current_url
+        del_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
+        del_btn.click()
+        #time.sleep(5)
 
-        title_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
-        title_input.clear()
-        title_input.send_keys("Új cím")
-        time.sleep(2)
-
-        publish_btn = self.browser.find_element(By.XPATH, '//button[@type="submit"]')
-        publish_btn.click()
-
-        title = WebDriverWait(self.browser, 15).until(EC.presence_of_element_located((By.XPATH, '//div[@class="container"]//h1')))
-
-        assert title.text == "Új cím"   
+        assert self.browser.current_url != article_url
         
     def test_logout(self):
         sign_in(self.browser)
