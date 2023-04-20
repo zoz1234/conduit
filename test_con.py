@@ -132,3 +132,4 @@ class TestConduit(object):
 
         sign_in_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.LINK_TEXT, 'Sign in')))
         assert sign_in_btn.is_displayed()
+        
