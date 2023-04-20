@@ -8,6 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from data_for_test import user, article
 from func_for_test import sign_in, create_article
 import time
+import csv
 
 
 class TestConduit(object):
@@ -123,6 +124,29 @@ class TestConduit(object):
         #time.sleep(5)
 
         assert self.browser.current_url != article_url
+        
+    def test_save_data_to_file(self):
+        sign_in(self.browser)
+        time.sleep(1)
+
+        # Az applikáció működése miatt, csak közvetlenül a felhasználó oldalára belépve
+        # gyűjti ki csak a felhasználó által publicált cikkeket. 
+        
+        self.browser.switch_to.new_window()
+        self.browser.get("http://localhost:1667/#/@testuser1")
+
+        about_list = WebDriverWait(self.browser, 15).until(
+            EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]//a//h1')))
+
+        with open('abouts.csv', 'w') as file:
+            writer = csv.writer(file)
+            for about in about_list:
+                writer.writerow([about.text])
+
+        with open('abouts.csv', 'r') as file:
+            first_row = file.readline().rstrip('\n')
+            
+            assert first_row == about_list[0].text
         
     def test_logout(self):
         sign_in(self.browser)
