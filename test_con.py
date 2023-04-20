@@ -147,7 +147,30 @@ class TestConduit(object):
             first_row = file.readline().rstrip('\n')
             
             assert first_row == about_list[0].text
+            
+    def test_create_commands_from_file(self):
+        sign_in(self.browser)
+        create_article(self.browser)
+        time.sleep(1)
         
+        comments_list = []
+
+        with open('comments.csv', 'r', encoding="UTF-8") as file:
+            comment_table = csv.reader(file)
+            for row in comment_table:
+                comments_list.append(row[0])
+
+        for i in range(len(comments_list)):
+            comment_input = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//textarea[@placeholder="Write a comment..."]')))
+            comment_input.send_keys(comments_list[i])
+
+            post_btn = self.browser.find_element(By.XPATH, '//button[@class="btn btn-sm btn-primary"]')
+            post_btn.click()
+            time.sleep(1)
+            new_comment = self.browser.find_elements(By.XPATH, '//p[@class="card-text"]')[0]
+
+            assert new_comment.text == comments_list[i] 
+            
     def test_logout(self):
         sign_in(self.browser)
 
