@@ -170,6 +170,31 @@ class TestConduit(object):
             new_comment = self.browser.find_elements(By.XPATH, '//p[@class="card-text"]')[0]
 
             assert new_comment.text == comments_list[i] 
+
+    def test_update_settings(self):
+        sign_in(self.browser)
+
+        settings_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.LINK_TEXT, 'Settings')))
+        settings_btn.click()
+        time.sleep(1)
+
+        name_input = self.browser.find_element(By.XPATH, '//input[@placeholder="Your username"]')
+        name_input.clear()
+        name_input.send_keys("Teszt Géza")
+
+        update_btn = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
+        update_btn.click()
+        time.sleep(3)
+
+        title_text = self.browser.find_element(By.XPATH, '//div[@class="swal-title"]')
+
+        assert title_text.text == "Update successful!"
+        ok_btn = self.browser.find_element(By.XPATH, '//button[@class="swal-button swal-button--confirm"]')
+        ok_btn.click()
+        time.sleep(1)
+        
+        name_label = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[2].text
+        assert  name_label == "Teszt Géza"            
             
     def test_logout(self):
         sign_in(self.browser)
