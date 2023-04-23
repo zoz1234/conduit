@@ -29,13 +29,13 @@ class TestConduit(object):
         self.browser.quit()
 
 
-    # Alaklamzás betöltésének ellenőrzése
+    # ATC-00 Alaklamzás betöltésének ellenőrzése
     def test_open(self):
         main_logo = self.browser.find_element(By.LINK_TEXT, 'conduit')
         assert main_logo.text == "conduit"
 
 
-    # Adatkezelési nyilatkozat használata
+    # ATC-01 Adatkezelési nyilatkozat használata
     def test_accept(self):
         footer = self.browser.find_element(By.TAG_NAME, 'footer')
         accept_btn = footer.find_element(By.XPATH,
@@ -46,7 +46,7 @@ class TestConduit(object):
         assert len(cookie_panel) == 0
 
 
-    # Regisztráció
+    # ATC-02 Regisztráció
     def test_sign_up(self):
         sing_up = self.browser.find_element(By.LINK_TEXT, 'Sign up')
         sing_up.click()
@@ -76,7 +76,7 @@ class TestConduit(object):
         assert user_name.text == user["name"]
 
 
-    # Bejelentkezés
+    # ATC-03 Bejelentkezés
     def test_login(self):
         sign_in(self.browser)
 
@@ -85,7 +85,7 @@ class TestConduit(object):
         assert user_name.text == user["name"]
 
 
-    # Adatok listázása - Az első oldalon lévő cikkek címeinek listába gyűjtése
+    # ATC-04 Adatok listázása - Az első oldalon lévő cikkek címeinek listába gyűjtése
     def test_article_title_list(self):
         sign_in(self.browser)
 
@@ -94,7 +94,7 @@ class TestConduit(object):
         assert len(title_list) != 0
 
 
-    # Több oldalas lista bejárása - cikkek összes oldala
+    # ATC-05 Több oldalas lista bejárása - cikkek összes oldala
     def test_pages(self):
         sign_in(self.browser)
 
@@ -107,7 +107,7 @@ class TestConduit(object):
             assert page.text == active_page.text
 
 
-    # Új adat bevitel - Új cikk felvétele
+    # ATC-06 Új adat bevitel - Új cikk felvétele
     def test_new_article(self):
         sign_in(self.browser)
         create_article(self.browser)
@@ -120,7 +120,7 @@ class TestConduit(object):
         assert title.text == article["title"]
 
 
-    # Ismételt és sorozatos adatbevitel adatforrásból - Commentek hozzáadása .csv fájlból
+    # ATC-07 Ismételt és sorozatos adatbevitel adatforrásból - Commentek hozzáadása .csv fájlból
     def test_create_comments_from_file(self):
         sign_in(self.browser)
         create_article(self.browser)
@@ -144,7 +144,7 @@ class TestConduit(object):
             assert new_comment.text == comments_list[i]
 
 
-    # Meglévő adat módosítás - Felhasználó nevének módosítása
+    # ATC-08 Meglévő adat módosítás - Felhasználó nevének módosítása
     def test_update_settings(self):
         sign_in(self.browser)
 
@@ -175,7 +175,7 @@ class TestConduit(object):
         assert name_label == "Teszt Géza"
 
 
-    #Adat vagy adatok törlése
+    # ATC-09 Adat vagy adatok törlése
     def test_delete_article(self):
         sign_in(self.browser)
         create_article(self.browser)
@@ -193,7 +193,7 @@ class TestConduit(object):
         assert self.browser.current_url != article_url
 
 
-    # Adatok lementése felületről - A user1 felhasználó cikkeihez tartozó rövid leírások mentése .csv fáljba
+    # ATC-10 Adatok lementése felületről - A user1 felhasználó cikkeihez tartozó rövid leírások mentése .csv fáljba
     def test_save_data_to_file(self):
         sign_in(self.browser)
         time.sleep(1)
@@ -219,7 +219,7 @@ class TestConduit(object):
             assert first_row == about_list[0].text
 
 
-    # Kijelentkezés
+    # ATC-11 Kijelentkezés
     def test_logout(self):
         sign_in(self.browser)
 
